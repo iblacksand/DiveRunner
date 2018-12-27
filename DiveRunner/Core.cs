@@ -33,6 +33,7 @@ public class Core
         canStart = false;
         dives = new List<Dive>();
         events = new List<Event>();
+
         // Create list of dives
 
         String[] divelistb = File.ReadAllText("./divelist.csv").Split('\n');
@@ -41,13 +42,30 @@ public class Core
 
     public void Start()
     {
-        for(int i = 0; i < events.Count; i++){
-            for(int j = 0; j < events[i].divers.Count; j++){
+        for(int i = 0; i < events.Count; i++)
+        {
+            for(int j = 0; j < events[i].divers.Count; j++)
+            {
                 totalDives += events[i].divers[j].Dives.Length;
             }
         }
-
         canStart = true;
+    }
+
+    public void NextScore(double[] scores)
+    {
+        if(!canStart) return; // Don't start if start method not ran
+        Event e = events[curEvent];
+        if(e.AddScore(scores))
+        {
+            curEvent++;
+        }
+        completedDives++;
+    }
+
+    public void SetScore(int eventIndex, int diverIndex, int diveIndex, double[] scores)
+    {
+        events[eventIndex].SetScore(diverIndex, diveIndex, scores);
     }
 
     public void AddEvent(Event e)
@@ -67,11 +85,19 @@ public class Core
     /// <param name="diveCode">The code of the dive. Capitalization doesn't matter.</param>
     /// <param name="boardHeight">The height of the board in meters. eg: 1m</param>
     /// <returns>A Dive object that corresponds to the query or null if not found.</returns>
-    Dive GetDive(string diveCode, string boardHeight)
+    public Dive GetDive(string diveCode, string boardHeight)
     {
         Dive d = dives.FirstOrDefault(x => x.Code == diveCode.ToUpper() && x.Board == boardHeight.ToUpper());
         if (d == null) d = new Dive();
         return d;
+    }
+
+    public void GenerateReports()
+    {
+        List<string> pdfs = new List<string>();
+        for(int i = 0; i < events.Count; i++){
+            pdfs.AddRange(events[i].GenerateReports());
+        }
     }
 }
 
@@ -93,20 +119,18 @@ public class CoreState
     }
 }
 
-public class Toolbox
-{
-    
-}
-
 public class Event
 {
     public String name;
     public List<Diver> divers;
     private int nextDiver;
     public Diver curDiver;
+    public string Board;
     public int at;
-	public Event(String Name)
+    private readonly string dirname = "pdfs";
+	public Event(String Name, String Board)
 	{
+        this.Board = Board;
 	    divers = new List<Diver>();
 	    this.nextDiver = 0;
 	    this.at = 0;
@@ -115,7 +139,9 @@ public class Event
 
     public void AddDiver(Diver d)
     {
+        d.EventName = this.name;
         divers.Add(d);
+        if(divers.Count == 1) curDiver = d;
     }
 
     public bool NextDiver()
@@ -132,7 +158,37 @@ public class Event
         return false;
     }
 
-    public bool 
+    public bool AddScore(double[] scores)
+    {
+        divers[at].AddScore(scores);
+        return NextDiver();
+    }
+
+    public void SetScore(int diverIndex, int diveIndex, double[] scores){
+        divers[diverIndex].SetScore(diveIndex, scores);
+    }
+
+    public List<string> GenerateReports()
+    {
+        string filename = dirname + "/" + name.Replace(" ", "");
+            string template = File.ReadAllText("ResultsTemplate.tex");
+            template = template.Replace("//Event//", name + " - " + Board);
+            template = template.Replace("//Diver Count//", "" + divers.Count);
+            List<Diver> sorted = divers.OrderByDescending(o => o.TotalScore).ToList();
+            for (int i = 0; i < sorted.Count; i++)
+            {
+                sorted[i].Place = i + 1;
+            }
+            string results = "";
+            for (int i = 0; i < sorted.Count; i++)
+            {
+                results += (i + 1) + "&" + sorted[i].Name + "&" + sorted[i].TotalScore + @"\\\midrule" + "\n";
+            }
+            divers = sorted;
+            template = template.Replace("//Results//", results);
+            File.WriteAllText(filename + ".tex", template);
+System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + dirname + " " + filename + ".tex");
+    }
 }
 
 
@@ -181,12 +237,11 @@ public class Diver
     public int Place { get; set; }
     public string dirname { get; set; }
 
-    public Diver(string name, string eventname, string board, Dive[] dives, string dirname)
+    public Diver(string name, string board, Dive[] dives)
     {
         this.Scores = new List<List<double>>();
-        this.dirname = dirname;
+        this.dirname = "pdfs";
         this.Name = name;
-        this.EventName = eventname;
         this.Board = board.ToUpper();
         this.Dives = dives;
         this.Pdf = "null";
@@ -219,6 +274,10 @@ public class Diver
         Scores.Add(judgeScores);
     }
 
+    public void SetPlace(int place)
+    {
+        this.Place = place;
+    }
     private void CalculateScore()
     {
         SubScores = new double[Scores.Count][];
