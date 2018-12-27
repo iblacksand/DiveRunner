@@ -13,21 +13,53 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Schema;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 public class Core
 {
-    List<Dive> dives;
-    private List<Event> events;
+    private bool canStart;
+    public List<Dive> dives;
+    public List<Event> events;
+    public int curEvent;
+    public int curDiver;
+    public int totalDives;
+    public int completedDives;
     public Core()
     {
+        totalDives = 0;
+        completedDives = 0;
+        canStart = false;
+        dives = new List<Dive>();
+        events = new List<Event>();
         // Create list of dives
-        String[] divelistb = File.ReadAllText("divelist.csv").Split('\n');
+
+        String[] divelistb = File.ReadAllText("./divelist.csv").Split('\n');
         for (int i = 1; i < divelistb.Length; i++) dives.Add(new Dive(divelistb[i]));
     }
 
-    public void Load(CoreSettings cset)
+    public void Start()
     {
+        for(int i = 0; i < events.Count; i++){
+            for(int j = 0; j < events[i].divers.Count; j++){
+                totalDives += events[i].divers[j].Dives.Length;
+            }
+        }
 
+        canStart = true;
     }
+
+    public void AddEvent(Event e)
+    {
+        events.Add(e);
+    }
+
+    public CoreState State()
+    {
+        return new CoreState(events[curEvent].curDiver, events[curEvent], completedDives, totalDives);
+    }
+    
 
     /// <summary>
     /// Search for the dive that has the given dive code and boardHeight
@@ -43,11 +75,21 @@ public class Core
     }
 }
 
-public class CoreSettings
-{
-    public CoreSettings()
-    {
 
+public class CoreState
+{
+    public Diver curDiver { get; }
+    public Event curEvent { get; }
+    public int completedDives { get; }
+    public int remainingDives { get; }
+    public int totalDives { get; }
+    public CoreState(Diver curDiver, Event curEvent, int completedDives, int totalDives)
+    {
+        this.curDiver = curDiver;
+        this.curEvent = curEvent;
+        this.completedDives = completedDives;
+        this.totalDives = totalDives;
+        this.remainingDives = totalDives - completedDives;
     }
 }
 
@@ -58,13 +100,43 @@ public class Toolbox
 
 public class Event
 {
-	public Event()
+    public String name;
+    public List<Diver> divers;
+    private int nextDiver;
+    public Diver curDiver;
+    public int at;
+	public Event(String Name)
 	{
+	    divers = new List<Diver>();
+	    this.nextDiver = 0;
+	    this.at = 0;
+	    this.name = Name;
 	}
+
+    public void AddDiver(Diver d)
+    {
+        divers.Add(d);
+    }
+
+    public bool NextDiver()
+    {
+        curDiver = divers[nextDiver];
+        at = nextDiver;
+        nextDiver++;
+        if (nextDiver == divers.Count)
+        {
+            nextDiver = 0;
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool 
 }
 
 
-class Dive
+public class Dive
 {
     public string Code { get; }
     public string Board { get; }
@@ -96,39 +168,64 @@ class Dive
     }
 }
 
-class Diver
+public class Diver
 {
     public string Name { get; set; }
     public string EventName { get; set; }
     public string Board { get; set; }
     public Dive[] Dives { get; set; }
-    public double[][] Scores { get; set; }
+    public List<List<double>> Scores { get; set; }
     public double[][] SubScores { get; set; }
     public double TotalScore { get; set; }
     public string Pdf { get; set; }
     public int Place { get; set; }
-    private string dirname { get; set; }
+    public string dirname { get; set; }
 
-    public Diver(string name, string eventname, string board, Dive[] dives, double[][] Scores, string dirname)
+    public Diver(string name, string eventname, string board, Dive[] dives, string dirname)
     {
+        this.Scores = new List<List<double>>();
         this.dirname = dirname;
         this.Name = name;
         this.EventName = eventname;
         this.Board = board.ToUpper();
         this.Dives = dives;
-        this.Scores = Scores;
         this.Pdf = "null";
         this.Place = 0;
         CalculateScore();
     }
 
+    public Diver(string name)
+    {
+        this.Name = name;
+    }
+
+    public void SetScore(int index, double[] judgeScores)
+    {
+        SetScore(index, new List<double>(judgeScores));
+    }
+
+    public void SetScore(int index, List<double> judgeScores)
+    {
+        Scores[index] = judgeScores;
+    }
+
+    public void AddScore(double[] judgeScores)
+    {
+        AddScore(new List<double>(judgeScores));
+    }
+
+    public void AddScore(List<double> judgeScores)
+    {
+        Scores.Add(judgeScores);
+    }
+
     private void CalculateScore()
     {
-        SubScores = new double[Scores.Length][];
-        for (int i = 0; i < Scores.Length; i++)
+        SubScores = new double[Scores.Count][];
+        for (int i = 0; i < Scores.Count; i++)
         {
             double subscore = 0;
-            for (int j = 0; j < Scores[i].Length; j++)
+            for (int j = 0; j < Scores[i].Count; j++)
             {
                 subscore += Scores[i][j];
             }
