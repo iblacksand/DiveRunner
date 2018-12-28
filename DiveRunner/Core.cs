@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -98,6 +99,36 @@ public class Core
         for(int i = 0; i < events.Count; i++){
             pdfs.AddRange(events[i].GenerateReports());
         }
+
+        Thread.Sleep(5000);
+        string filename = "pdfs/" + "/CombinedReport";
+        string template = File.ReadAllText("CombinedTemplate.tex");
+        string includes = "";
+        foreach (string d in pdfs)
+        {
+            includes += @"\includepdf{" + d + "}\n";
+        }
+        template = template.Replace("//Pdf includes//", includes);
+        File.WriteAllText(filename + ".tex", template);
+        System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + "pdfs" + " " + filename + ".tex");
+    }
+
+    public void GenerateDiveList(){
+        List<string> pdfs = new List<string>();
+        for(int i = 0; i < events.Count; i++){
+            pdfs.Add(events[i].GenerateDiveList());
+        }
+        Thread.Sleep(5000);
+        string filename = "pdfs/" + "/CombinedDiveList";
+        string template = File.ReadAllText("CombinedTemplate.tex");
+        string includes = "";
+        foreach (string d in pdfs)
+        {
+            includes += @"\includepdf{" + d + "}\n";
+        }
+        template = template.Replace("//Pdf includes//", includes);
+        File.WriteAllText(filename + ".tex", template);
+        System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + "pdfs" + " " + filename + ".tex");
     }
 }
 
@@ -170,6 +201,10 @@ public class Event
 
     public List<string> GenerateReports()
     {
+        for(int i = 0; i < divers.Count; i++)
+        {
+            divers[i].CalculateScore();
+        }
         string filename = dirname + "/" + name.Replace(" ", "");
             string template = File.ReadAllText("ResultsTemplate.tex");
             template = template.Replace("//Event//", name + " - " + Board);
@@ -188,6 +223,37 @@ public class Event
             template = template.Replace("//Results//", results);
             File.WriteAllText(filename + ".tex", template);
 System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + dirname + " " + filename + ".tex");
+            List<string> pdfs = new List<string>();
+            pdfs.Add(name.Replace(" ", "") + ".pdf");
+            foreach (Diver d in divers)
+            {
+                pdfs.Add(d.Pdf.Split('/')[1]);
+            }
+            return pdfs;
+    }
+
+    public string GenerateDiveList(){
+        string template = File.ReadAllText("AnnouncementTemplate.tex");
+                template = template.Replace("//Event//", name + " - " + Board);
+                template = template.Replace("//Diver Count//", divers.Count + "");
+                string list = "";
+                for (int i = 0; i < divers.Count; i++)
+                {
+                    string listtemp = File.ReadAllText("DivelistTemplate.tex");
+                    listtemp = listtemp.Replace("//Diver Name//", divers[i].Name);
+                    string data = "";
+                    for (int j = 0; j < divers[i].Dives.Length; j++)
+                    {
+                        data += (j + 1) + "&" + divers[i].Dives[j].Code + "&" + divers[i].Dives[j].Description + @"&\underline{\hspace{1cm}}\\" + "\n";
+                    }
+                    listtemp = listtemp.Replace("//Data//", data);
+                    list += listtemp;
+                }
+                template = template.Replace("//List//", list);
+                string filename = dirname + "/AnnouncersList-"+name.Replace(" ", "");
+                File.WriteAllText(filename + ".tex", template);
+                System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + dirname + " " + filename + ".tex");
+                return filename.Split('/')[1] +".pdf";
     }
 }
 
@@ -246,7 +312,6 @@ public class Diver
         this.Dives = dives;
         this.Pdf = "null";
         this.Place = 0;
-        CalculateScore();
     }
 
     public Diver(string name)
@@ -278,7 +343,7 @@ public class Diver
     {
         this.Place = place;
     }
-    private void CalculateScore()
+    public void CalculateScore()
     {
         SubScores = new double[Scores.Count][];
         for (int i = 0; i < Scores.Count; i++)
