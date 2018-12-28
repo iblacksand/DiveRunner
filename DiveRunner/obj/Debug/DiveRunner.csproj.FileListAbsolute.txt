@@ -18,3 +18,9 @@ C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\DiveRunner.csproj.
 C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\DiveRunner.exe
 C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\DiveRunner.pdb
 C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\bin\Debug\divelist.csv
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\EventWindow.g.cs
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\MainWindow.g.cs
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\EventWindow.baml
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\MainWindow.baml
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\DiverWindow.g.cs
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\DiverWindow.baml

@@ -10,6 +10,7 @@
         <Button x:Name="LoadButton" Content="Load Meet" HorizontalAlignment="Left" Margin="178,178,0,0" VerticalAlignment="Top" Width="81" Height="26" Click="LoadButton_Click"/>
         <Button x:Name="NewMeetButton" Content="New Meet" HorizontalAlignment="Left" Margin="178,108,0,0" VerticalAlignment="Top" Width="81" Height="29" Click="NewMeetButton_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="61,41,0,0" TextWrapping="Wrap" Text="Dive Meet Runner" VerticalAlignment="Top" Height="44" Width="321" FontWeight="Bold" FontSize="36" RenderTransformOrigin="-0.015,0.567"/>
+        <Button x:Name="Testbutton" Content="Test" HorizontalAlignment="Left" Margin="34,137,0,0" VerticalAlignment="Top" Width="75" Click="Testbutton_Click"/>
 
     </Grid>
 </Window>

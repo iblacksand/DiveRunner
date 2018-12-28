@@ -21,6 +21,7 @@ using Newtonsoft.Json.Converters;
 public class Core
 {
     private bool canStart;
+    private List<Event> runningEvents;
     public List<Dive> dives;
     public List<Event> events;
     public int curEvent;
@@ -34,7 +35,7 @@ public class Core
         canStart = false;
         dives = new List<Dive>();
         events = new List<Event>();
-
+        runningEvents = new List<Event>();
         // Create list of dives
 
         String[] divelistb = File.ReadAllText("./divelist.csv").Split('\n');
@@ -50,16 +51,24 @@ public class Core
                 totalDives += events[i].divers[j].Dives.Length;
             }
         }
+        runningEvents.AddRange(events);
         canStart = true;
     }
 
     public void NextScore(double[] scores)
     {
         if(!canStart) return; // Don't start if start method not ran
-        Event e = events[curEvent];
-        if(e.AddScore(scores))
+        if(runningEvents[curEvent].AddScore(scores))
         {
-            curEvent++;
+            if (runningEvents[curEvent].IsDone())
+            {
+                runningEvents.RemoveAt(curEvent);
+            }
+            else
+            {
+                curEvent++;
+            }
+            curEvent = curEvent % events.Count;
         }
         completedDives++;
     }
@@ -130,6 +139,12 @@ public class Core
         File.WriteAllText(filename + ".tex", template);
         System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + "pdfs" + " " + filename + ".tex");
     }
+
+    public void AutoSave()
+    {
+        string data = JsonConvert.SerializeObject(this);
+        File.WriteAllText("LatestCore.json", data);
+    }
 }
 
 
@@ -157,10 +172,12 @@ public class Event
     private int nextDiver;
     public Diver curDiver;
     public string Board;
+    private int completedDives;
     public int at;
     private readonly string dirname = "pdfs";
 	public Event(String Name, String Board)
 	{
+	    this.completedDives = 0;
         this.Board = Board;
 	    divers = new List<Diver>();
 	    this.nextDiver = 0;
@@ -192,6 +209,7 @@ public class Event
     public bool AddScore(double[] scores)
     {
         divers[at].AddScore(scores);
+        completedDives++;
         return NextDiver();
     }
 
@@ -254,6 +272,17 @@ System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + d
                 File.WriteAllText(filename + ".tex", template);
                 System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + dirname + " " + filename + ".tex");
                 return filename.Split('/')[1] +".pdf";
+    }
+
+    public bool IsDone()
+    {
+        int totalDives = divers[0].Dives.Length * divers.Count;
+        return (totalDives - completedDives <= 0);
+    }
+
+    public override string ToString()
+    {
+        return name;
     }
 }
 
@@ -379,5 +408,9 @@ public class Diver
         System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + dirname + " " + filename + ".tex");
         Pdf = filename + ".pdf";
         return Pdf;
+    }
+    public override string ToString()
+    {
+        return Name;
     }
 }

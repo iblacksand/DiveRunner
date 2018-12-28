@@ -1,0 +1,22 @@
+﻿<Window x:Class="DiveRunner.DiverWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiveRunner"
+        mc:Ignorable="d"
+        Title="DiverWindow" Height="450" Width="800">
+    <Grid>
+        <ListBox x:Name="DiveListBox" HorizontalAlignment="Left" Height="253" Margin="26,118,0,0" VerticalAlignment="Top" Width="497"/>
+        <TextBlock x:Name="DivesBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Dives" VerticalAlignment="Top" Margin="28,88,0,0"/>
+        <Button x:Name="NewDiveButton" Content="Add Dive" HorizontalAlignment="Left" Margin="683,139,0,0" VerticalAlignment="Top" Width="82" Height="32" FontSize="16" Click="NewDiveButton_Click"/>
+        <TextBox x:Name="DiveCodeText" HorizontalAlignment="Left" Height="32" Margin="564,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119" FontSize="18" ToolTip="Dive Code"/>
+        <Button x:Name="RemoveButton" Content="Remove Dive" HorizontalAlignment="Left" VerticalAlignment="Top" Width="82" Margin="628,232,0,0" Height="30" Click="RemoveButton_Click"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Diver Name" VerticalAlignment="Top" Margin="2,40,0,0"/>
+        <TextBox x:Name="DiverNameBox" HorizontalAlignment="Left" Height="32" Margin="93,42,0,0" TextWrapping="Wrap" Text="Diver Name" VerticalAlignment="Top" Width="401" FontSize="22"/>
+        <Button HorizontalAlignment="Left" Margin="628,327,0,0" VerticalAlignment="Top" Width="75">
+            <Button x:Name="SaveButton" Content="Save" Width="75" Click="SaveButton_Click"/>
+        </Button>
+
+    </Grid>
+</Window>

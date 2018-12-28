@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\App.xaml
-1-1252319146
+4-1100624820
 
-10-1756376422
+13148547567
 14245334628
-StartWindow.xaml;
+DiverWindow.xaml;EventWindow.xaml;MainWindow.xaml;StartWindow.xaml;
 
-False
+True
 
