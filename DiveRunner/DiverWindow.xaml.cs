@@ -36,6 +36,9 @@ namespace DiveRunner
 
         public DiverWindow(Diver toEdit)
         {
+            dives = new List<Dive>();
+            String[] divelistb = File.ReadAllText("./divelist.csv").Split('\n');
+            for (int i = 1; i < divelistb.Length; i++) dives.Add(new Dive(divelistb[i]));
             InitializeComponent();
             this.diver = toEdit;
             this.Board = toEdit.Board;

@@ -1,0 +1,42 @@
+\documentclass[12pt, letterpaper, landscape]{article}
+\usepackage[margin=1in, rmargin=.25in, lmargin=.25in]{geometry}
+\usepackage{booktabs, tabularx}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Boise Diving}
+\lhead{3M}
+\begin{document}
+	\begin{center}
+		\textbf{Hello World}
+	\end{center}
+	
+	Meet: Boise Diving
+
+	Event: Girls Five to eleven - 3M
+	
+	Diver: Hello World
+	
+	Place : 1
+	
+	\begin{center}
+		Dive List
+	\end{center}
+	
+	\begin{table}[h]
+		\centering
+			\begin{tabularx}{\textwidth}{|c X X X X X X|}
+			Dive&Dive Description&Judge 1 Score&Judge 2 Score&Judge 3 Score&Total Score & Award\\\midrule
+%			301A&Some Dive&1&5&5&4.5&25\\
+%			101b&Some Dive&1&3&4&2&42\\
+			201B&Back Dive Pike&3&3&3&9&16.2\\\midrule
+301C&Reverse Dive Tuck&7&7&7&21&37.8\\\midrule
+\midrule
+			\multicolumn{5}{|c}{Total} & \multicolumn{2}{c|}{54}\\
+		\end{tabularx}
+	\end{table}
+
+
+
+
+\end{document}

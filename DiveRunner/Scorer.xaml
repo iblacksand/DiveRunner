@@ -1,0 +1,27 @@
+﻿<Window x:Class="DiveRunner.Scorer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiveRunner"
+        mc:Ignorable="d"
+        Title="Scorer" Height="450" Width="800">
+    <Grid>
+        <Rectangle x:Name="BorderRectangle" HorizontalAlignment="Left" Height="260" Margin="668,137,0,0" Stroke="Black" VerticalAlignment="Top" Width="117" StrokeThickness="2" RadiusX="5" RadiusY="5"/>
+        <TextBlock x:Name="TotalDiveBlock" HorizontalAlignment="Left" Margin="673,160,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="20" Width="117"/>
+        <TextBlock x:Name="RemainingDiveBlock" HorizontalAlignment="Left" Margin="672,203,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="20" Width="117"/>
+        <TextBlock x:Name="CompletedDiveBlock" HorizontalAlignment="Left" Margin="672,249,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="20" Width="117"/>
+        <TextBlock x:Name="TitleBlock" HorizontalAlignment="Left" Margin="339,10,0,0" TextWrapping="Wrap" Text="Scorer" VerticalAlignment="Top" Height="30" Width="281" FontSize="22"/>
+        <TextBlock x:Name="DiverNameBlock" HorizontalAlignment="Left" Margin="50,60,0,0" TextWrapping="Wrap" Text="Diver Name" VerticalAlignment="Top" Height="30" Width="281" FontSize="22"/>
+        <TextBlock x:Name="EventNameBlock" HorizontalAlignment="Left" Margin="50,99,0,0" TextWrapping="Wrap" Text="Event Name" VerticalAlignment="Top" Height="30" Width="281" FontSize="16"/>
+        <TextBlock x:Name="JudgeOneBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Judge One" VerticalAlignment="Top" Margin="73,179,0,0"/>
+        <TextBox x:Name="JudgeOneScoreBox" HorizontalAlignment="Left" Height="23" Margin="71,209,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="61" TextAlignment="Center"/>
+        <TextBlock x:Name="JudgeTwoBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Judge Two" VerticalAlignment="Top" Margin="268,179,0,0"/>
+        <TextBox x:Name="JudgeTwoScoreBox" HorizontalAlignment="Left" Height="23" Margin="266,209,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="61" TextAlignment="Center"/>
+        <TextBlock x:Name="JudgeThreeBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Judge Three" VerticalAlignment="Top" Margin="433,179,0,0"/>
+        <TextBox x:Name="JudgeThreeScoreBox" HorizontalAlignment="Left" Height="23" Margin="431,209,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="61" TextAlignment="Center"/>
+        <Button x:Name="NextDiverButton" Content="Next Diver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="114" Margin="254,337,0,0" Height="44" Click="NextDiverButton_Click"/>
+        <TextBlock x:Name="DiveBlock" HorizontalAlignment="Left" Margin="73,137,0,0" TextWrapping="Wrap" Text="DiveBlock" VerticalAlignment="Top" Height="37" Width="474" FontSize="20"/>
+
+    </Grid>
+</Window>

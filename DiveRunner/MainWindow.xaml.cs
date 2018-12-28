@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace DiveRunner
 {
@@ -24,6 +27,7 @@ namespace DiveRunner
         {
             this.c = c;
             InitializeComponent();
+            JudgeCounter.Text = "1";
             foreach (Event cEvent in c.events)
             {
                 EventListView.Items.Add(cEvent);
@@ -59,10 +63,16 @@ namespace DiveRunner
             EventListView.Items.RemoveAt(index);
         }
 
-        private void TestButton_Click(object sender, RoutedEventArgs e)
+        private void SaveAsButton_Click(object sender, RoutedEventArgs e)
         {
-//            c.AutoSave();
-//            c.GenerateDiveList();
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "JSON Files | *.json";
+            sfd.ShowDialog();
+            string f = sfd.FileName;
+            string s = JsonConvert.SerializeObject(c);
+            File.WriteAllText(f,s);
+            //            c.AutoSave();
+            //            c.GenerateDiveList();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -74,6 +84,19 @@ namespace DiveRunner
         private void AnnouncersListButton_Click(object sender, RoutedEventArgs e)
         {
             c.GenerateDiveList();
+        }
+
+        private void ScorerButton_Click(object sender, RoutedEventArgs e)
+        {
+            int judges = Int32.Parse(JudgeCounter.Text);
+            Scorer s = new Scorer(c, judges);
+            s.ShowDialog();
+            this.c = s.c;
+        }
+
+        private void DiveSheetButton_Click(object sender, RoutedEventArgs e)
+        {
+            c.GenerateReports();
         }
     }
 }

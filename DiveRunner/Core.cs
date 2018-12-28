@@ -58,13 +58,15 @@ public class Core
                 totalDives += events[i].divers[j].Dives.Length;
             }
         }
+
+        curEvent = 0;
         runningEvents.AddRange(events);
         canStart = true;
     }
 
     public void NextScore(double[] scores)
     {
-        if(!canStart) return; // Don't start if start method not ran
+        if(!canStart || runningEvents.Count == 0) return; // Don't start if start method not ran
         if(runningEvents[curEvent].AddScore(scores))
         {
             if (runningEvents[curEvent].IsDone())
@@ -75,7 +77,11 @@ public class Core
             {
                 curEvent++;
             }
-            curEvent = curEvent % events.Count;
+
+            if (runningEvents.Count != 0)
+            {
+                curEvent = curEvent % runningEvents.Count;
+            }
         }
         completedDives++;
     }
@@ -92,7 +98,11 @@ public class Core
 
     public CoreState State()
     {
-        return new CoreState(events[curEvent].curDiver, events[curEvent], completedDives, totalDives);
+        if (runningEvents.Count == 0)
+        {
+            return new CoreState(null, null, completedDives, totalDives);
+        }
+        return new CoreState(runningEvents[curEvent].curDiver, runningEvents[curEvent], completedDives, totalDives);
     }
     
 
@@ -182,12 +192,12 @@ public class Event
 {
     public String name;
     public List<Diver> divers;
-    private int nextDiver;
+    public int nextDiver;
     public Diver curDiver;
     public string Board;
-    private int completedDives;
+    public int completedDives;
     public int at;
-    private readonly string dirname = "pdfs";
+    public string dirname = "pdfs";
 	public Event(String Name, String Board)
 	{
 	    this.completedDives = 0;
@@ -217,15 +227,16 @@ public class Event
 
     public bool NextDiver()
     {
-        curDiver = divers[nextDiver];
-        at = nextDiver;
-        nextDiver++;
+        nextDiver = at + 1;
         if (nextDiver == divers.Count)
         {
             nextDiver = 0;
+            curDiver = divers[nextDiver];
+            at = nextDiver;
             return true;
         }
-
+        curDiver = divers[nextDiver];
+        at = nextDiver;
         return false;
     }
 
@@ -261,7 +272,11 @@ public class Event
                 results += (i + 1) + "&" + sorted[i].Name + "&" + sorted[i].TotalScore + @"\\\midrule" + "\n";
             }
             divers = sorted;
-            template = template.Replace("//Results//", results);
+            for (int i = 0; i < divers.Count; i++)
+            {
+                divers[i].GenerateReport();
+            }
+        template = template.Replace("//Results//", results);
             File.WriteAllText(filename + ".tex", template);
 System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + dirname + " " + filename + ".tex");
             List<string> pdfs = new List<string>();
@@ -354,6 +369,7 @@ public class Diver
     public string Pdf { get; set; }
     public int Place { get; set; }
     public string dirname { get; set; }
+    public int currentDive;
 
     public Diver(string name, string board, Dive[] dives)
     {
@@ -364,16 +380,19 @@ public class Diver
         this.Dives = dives;
         this.Pdf = "null";
         this.Place = 0;
+        this.currentDive = 0;
     }
 
     public Diver(string name)
     {
         this.Name = name;
+        this.currentDive = 0;
     }
 
     public Diver()
     {
         this.Name = "";
+        this.currentDive = 0;
     }
 
     public void SetScore(int index, double[] judgeScores)
@@ -394,6 +413,12 @@ public class Diver
     public void AddScore(List<double> judgeScores)
     {
         Scores.Add(judgeScores);
+        currentDive++;
+    }
+
+    public Dive CurrentDive()
+    {
+        return Dives[currentDive];
     }
 
     public void SetPlace(int place)
@@ -433,8 +458,8 @@ public class Diver
         }
         template = template.Replace("//tabledata//", table);
         File.WriteAllText(filename + ".tex", template);
-        System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + dirname + " " + filename + ".tex");
         Pdf = filename + ".pdf";
+        System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + dirname + " " + filename + ".tex");
         return Pdf;
     }
     public override string ToString()
