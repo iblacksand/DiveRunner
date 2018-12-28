@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ public class Core
 {
     private bool canStart;
     private List<Event> runningEvents;
-    public List<Dive> dives;
+    private List<Dive> dives;
     public List<Event> events;
     public int curEvent;
     public int curDiver;
@@ -30,6 +31,12 @@ public class Core
     public int completedDives;
     public Core()
     {
+        if (!Directory.Exists("pdfs")) Directory.CreateDirectory("pdfs");
+        else
+        {
+            Directory.Delete("pdfs", true);
+            Directory.CreateDirectory("pdfs");
+        }
         totalDives = 0;
         completedDives = 0;
         canStart = false;
@@ -104,6 +111,7 @@ public class Core
 
     public void GenerateReports()
     {
+        if (!Directory.Exists("pdfs")) Directory.CreateDirectory("pdfs");
         List<string> pdfs = new List<string>();
         for(int i = 0; i < events.Count; i++){
             pdfs.AddRange(events[i].GenerateReports());
@@ -111,7 +119,7 @@ public class Core
 
         Thread.Sleep(5000);
         string filename = "pdfs/" + "/CombinedReport";
-        string template = File.ReadAllText("CombinedTemplate.tex");
+        string template = File.ReadAllText("CombinedTemplateLandscape.tex");
         string includes = "";
         foreach (string d in pdfs)
         {
@@ -120,16 +128,19 @@ public class Core
         template = template.Replace("//Pdf includes//", includes);
         File.WriteAllText(filename + ".tex", template);
         System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + "pdfs" + " " + filename + ".tex");
+        Thread.Sleep(5000);
+        Process.Start(Environment.CurrentDirectory + "/" + filename + ".pdf");
     }
 
     public void GenerateDiveList(){
+        if (!Directory.Exists("pdfs")) Directory.CreateDirectory("pdfs");
         List<string> pdfs = new List<string>();
         for(int i = 0; i < events.Count; i++){
             pdfs.Add(events[i].GenerateDiveList());
         }
         Thread.Sleep(5000);
-        string filename = "pdfs/" + "/CombinedDiveList";
-        string template = File.ReadAllText("CombinedTemplate.tex");
+        string filename = "pdfs/" + "CombinedDiveList";
+        string template = File.ReadAllText("CombinedTemplatePortrait.tex");
         string includes = "";
         foreach (string d in pdfs)
         {
@@ -138,6 +149,8 @@ public class Core
         template = template.Replace("//Pdf includes//", includes);
         File.WriteAllText(filename + ".tex", template);
         System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + "pdfs" + " " + filename + ".tex");
+        Thread.Sleep(5000);
+        Process.Start(Environment.CurrentDirectory + "/" + filename + ".pdf");
     }
 
     public void AutoSave()
@@ -184,6 +197,16 @@ public class Event
 	    this.at = 0;
 	    this.name = Name;
 	}
+
+    public Event()
+    {
+        this.completedDives = 0;
+        this.Board = "";
+        divers = new List<Diver>();
+        this.nextDiver = 0;
+        this.at = 0;
+        this.name = "";
+    }
 
     public void AddDiver(Diver d)
     {
@@ -289,11 +312,11 @@ System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + d
 
 public class Dive
 {
-    public string Code { get; }
-    public string Board { get; }
-    public string Description { get; }
-    public Double DD { get; }
-    public string DiveData { get; }
+    public string Code { get; set; }
+    public string Board { get; set; }
+    public string Description { get; set; }
+    public Double DD { get; set; }
+    public string DiveData { get; set; }
     public Dive()
     {
         this.Code = "000A";
@@ -346,6 +369,11 @@ public class Diver
     public Diver(string name)
     {
         this.Name = name;
+    }
+
+    public Diver()
+    {
+        this.Name = "";
     }
 
     public void SetScore(int index, double[] judgeScores)

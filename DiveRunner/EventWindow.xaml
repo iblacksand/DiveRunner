@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiveRunner"
         mc:Ignorable="d"
-        Title="EventWindow" Height="450" Width="800">
+        Title="EventWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
-        <ListBox HorizontalAlignment="Left" Height="285" Margin="10,78,0,0" VerticalAlignment="Top" Width="542"/>
-        <Button x:Name="NewDiverButton" Content="New Diver" Margin="608,92,86,298.5" Click="NewDiverButton_Click"/>
-        <Button x:Name="EditDiverButton" Content="Edit Diver" HorizontalAlignment="Left" Margin="608,156,0,0" VerticalAlignment="Top" Width="101" Height="30"/>
+        <ListBox x:Name="DiverList" HorizontalAlignment="Left" Height="285" Margin="10,78,0,0" VerticalAlignment="Top" Width="542"/>
+        <Button x:Name="NewDiverButton" Content="New Diver" Margin="608,92,86,298.5" Click="NewDiverButton_Click" IsEnabled="False"/>
+        <Button x:Name="EditDiverButton" Content="Edit Diver" HorizontalAlignment="Left" Margin="608,156,0,0" VerticalAlignment="Top" Width="101" Height="30" IsEnabled="False" Click="EditDiverButton_Click"/>
         <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="674,376,0,0" VerticalAlignment="Top" Width="111" Height="36" Click="SaveButton_Click"/>
         <TextBlock x:Name="titleBlock" HorizontalAlignment="Left" Margin="30,38,0,0" TextWrapping="Wrap" Text="Title Of Event
 " VerticalAlignment="Top"/>
@@ -17,6 +17,8 @@
         <ComboBox x:Name="BoardSelection" HorizontalAlignment="Left" Margin="593,38,0,0" VerticalAlignment="Top" Width="44"/>
         <TextBlock x:Name="boardBlock" HorizontalAlignment="Left" Margin="497,41,0,0" TextWrapping="Wrap" Text="Board Height" VerticalAlignment="Top"/>
         <TextBlock x:Name="diverNameBlock" HorizontalAlignment="Left" Margin="22,62,0,0" TextWrapping="Wrap" Text="Divers in Event" VerticalAlignment="Top"/>
+        <Button x:Name="SetButton" Content="Set" HorizontalAlignment="Left" Margin="647,38,0,0" VerticalAlignment="Top" Width="47" Click="SetButton_Click"/>
+        <Button x:Name="RemoveDiverButton" Content="Remove Diver" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Margin="608,219,0,0" Height="32" Click="RemoveDiverButton_Click"/>
 
     </Grid>
 </Window>

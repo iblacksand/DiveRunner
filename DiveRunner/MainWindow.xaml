@@ -5,10 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiveRunner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800" Closed="Window_Closed">
+    <Grid RenderTransformOrigin="0.376,0.53">
         <ListBox x:Name="EventListView" HorizontalAlignment="Left" Height="304" Margin="10,76,0,0" VerticalAlignment="Top" Width="579" RenderTransformOrigin="0.493,0.535"/>
         <Button x:Name="NewEventButton" Content="New Event" HorizontalAlignment="Left" Margin="651,107,0,0" VerticalAlignment="Top" Width="92" Height="26" Click="NewEvent"/>
+        <TextBlock x:Name="EventBlock" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Events" VerticalAlignment="Top" Width="120" Margin="22,54,0,0"/>
+        <TextBlock x:Name="DiveRunnerBlock" HorizontalAlignment="Left" Margin="314,10,0,0" TextWrapping="Wrap" Text="Dive Runner" VerticalAlignment="Top" FontSize="24"/>
+        <Button x:Name="EditEventButton" Content="Edit Event" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="651,157,0,0" Height="27" Click="EditEventButton_Click"/>
+        <Button x:Name="RemoveEventButton" Content="Remove Event" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="651,209,0,0" Height="26" Click="RemoveEventButton_Click"/>
+        <Button x:Name="TestButton" Content="Test" HorizontalAlignment="Left" Margin="693,24,0,0" VerticalAlignment="Top" Width="92" Click="TestButton_Click" Height="26"/>
+        <Button x:Name="AnnouncersListButton" Content="Generate Announcers List
+                " HorizontalAlignment="Left" Margin="625,255,0,0" VerticalAlignment="Top" Width="142" Height="25" Click="AnnouncersListButton_Click"/>
 
     </Grid>
 </Window>

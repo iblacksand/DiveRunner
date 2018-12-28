@@ -34,6 +34,16 @@ namespace DiveRunner
             InitializeComponent();
         }
 
+        public DiverWindow(Diver toEdit)
+        {
+            InitializeComponent();
+            this.diver = toEdit;
+            this.Board = toEdit.Board;
+            diveList = new List<Dive>(toEdit.Dives);
+            foreach (Dive d in toEdit.Dives) DiveListBox.Items.Add(d);
+            DiverNameBox.Text = toEdit.Name;
+        }
+
         private void NewDiveButton_Click(object sender, RoutedEventArgs e)
         {
             Dive toAdd = GetDive(DiveCodeText.Text, Board);
@@ -56,6 +66,10 @@ namespace DiveRunner
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            if (DiveListBox.SelectedIndex == -1)
+            {
+                return;
+            }
             Dive toRemove = (Dive) (DiveListBox.SelectedItem);
             int index = diveList.FindIndex(x => x.Code == toRemove.Code);
             diveList.RemoveAt(index);
@@ -66,6 +80,11 @@ namespace DiveRunner
         {
             diver = new Diver(DiverNameBox.Text, Board, diveList.ToArray());
             this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            diver = new Diver(DiverNameBox.Text, Board, diveList.ToArray());
         }
     }
 }

@@ -35,7 +35,7 @@ namespace DiveRunner
             fileD.Filter = "JSON Files | *.json";
             fileD.ShowDialog();
             string f = fileD.FileName;
-            Core c = (Core)JsonConvert.DeserializeObject(File.ReadAllText(f));
+            Core c = JsonConvert.DeserializeObject<Core>(File.ReadAllText(f));
             ShowMainWindow(c);
         }
 

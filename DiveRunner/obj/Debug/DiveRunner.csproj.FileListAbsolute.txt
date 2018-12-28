@@ -24,3 +24,9 @@ C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\EventWindow.baml
 C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\MainWindow.baml
 C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\DiverWindow.g.cs
 C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\obj\Debug\DiverWindow.baml
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\bin\Debug\AnnouncementTemplate.tex
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\bin\Debug\DivelistTemplate.tex
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\bin\Debug\DiveScoreTemplate.tex
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\bin\Debug\ResultsTemplate.tex
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\bin\Debug\CombinedTemplateLandscape.tex
+C:\Users\eliza\Documents\Code\DiveRunner\DiveRunner\bin\Debug\CombinedTemplatePortrait.tex

@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiveRunner"
         mc:Ignorable="d"
-        Title="DiverWindow" Height="450" Width="800">
+        Title="DiverWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="784*"/>
+            <ColumnDefinition Width="11*"/>
+        </Grid.ColumnDefinitions>
         <ListBox x:Name="DiveListBox" HorizontalAlignment="Left" Height="253" Margin="26,118,0,0" VerticalAlignment="Top" Width="497"/>
         <TextBlock x:Name="DivesBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Dives" VerticalAlignment="Top" Margin="28,88,0,0"/>
         <Button x:Name="NewDiveButton" Content="Add Dive" HorizontalAlignment="Left" Margin="683,139,0,0" VerticalAlignment="Top" Width="82" Height="32" FontSize="16" Click="NewDiveButton_Click"/>
