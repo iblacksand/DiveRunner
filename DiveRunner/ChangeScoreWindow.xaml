@@ -1,0 +1,21 @@
+﻿<Window x:Class="DiveRunner.ChangeScoreWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiveRunner"
+        mc:Ignorable="d"
+        Title="ChangeScoreWindow" Height="450" Width="800" Closing="Window_Closing">
+    <Grid>
+        <TextBox x:Name="JudgeOneScoreBox" HorizontalAlignment="Left" Height="23" Margin="116,288,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="69"/>
+        <TextBlock HorizontalAlignment="Left" Margin="116,244,0,0" TextWrapping="Wrap" Text="Judge 1 Score" VerticalAlignment="Top" Height="39" Width="69"/>
+        <TextBox x:Name="JudgeTwoScoreBox" HorizontalAlignment="Left" Height="23" Margin="356,288,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="69"/>
+        <TextBlock HorizontalAlignment="Left" Margin="356,244,0,0" TextWrapping="Wrap" Text="Judge 2 Score" VerticalAlignment="Top" Height="39" Width="69"/>
+        <TextBox x:Name="JudgeThreeScoreBox" HorizontalAlignment="Left" Height="23" Margin="581,288,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="69"/>
+        <TextBlock HorizontalAlignment="Left" Margin="581,244,0,0" TextWrapping="Wrap" Text="Judge 3 Score" VerticalAlignment="Top" Height="39" Width="69"/>
+        <TextBlock x:Name="DiverNameBlock" HorizontalAlignment="Left" Margin="327,48,0,0" TextWrapping="Wrap" Text="Diver Name" VerticalAlignment="Top" FontSize="24"/>
+        <TextBlock x:Name="DiveCodeBlock" HorizontalAlignment="Left" Margin="116,168,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="309" FontSize="18"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="282,369,0,0" VerticalAlignment="Top" Width="204" Click="SaveButton_Click"/>
+
+    </Grid>
+</Window>

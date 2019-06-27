@@ -69,6 +69,7 @@ public class Core
         if(!canStart || runningEvents.Count == 0) return; // Don't start if start method not ran
         if(runningEvents[curEvent].AddScore(scores))
         {
+            AutoSave();
             if (runningEvents[curEvent].IsDone())
             {
                 runningEvents.RemoveAt(curEvent);
@@ -133,7 +134,7 @@ public class Core
         string includes = "";
         foreach (string d in pdfs)
         {
-            includes += @"\includepdf{" + d + "}\n";
+            includes += @"\includepdf[pages=-]{" + d + "}\n";
         }
         template = template.Replace("//Pdf includes//", includes);
         File.WriteAllText(filename + ".tex", template);
@@ -154,7 +155,7 @@ public class Core
         string includes = "";
         foreach (string d in pdfs)
         {
-            includes += @"\includepdf{" + d + "}\n";
+            includes += @"\includepdf[pages=-]{" + d + "}\n";
         }
         template = template.Replace("//Pdf includes//", includes);
         File.WriteAllText(filename + ".tex", template);

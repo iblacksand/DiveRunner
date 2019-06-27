@@ -24,6 +24,8 @@ namespace DiveRunner
         private List<Dive> diveList;
         private List<Dive> dives;
         private String Board;
+        private List<List<double>> scores;
+        private bool hasScores;
         public DiverWindow(string Board)
         {
             dives = new List<Dive>();
@@ -32,6 +34,8 @@ namespace DiveRunner
             String[] divelistb = File.ReadAllText("./divelist.csv").Split('\n');
             for (int i = 1; i < divelistb.Length; i++) dives.Add(new Dive(divelistb[i]));
             InitializeComponent();
+            hasScores = false;
+            ChangeScoresButton.IsEnabled = false;
         }
 
         public DiverWindow(Diver toEdit)
@@ -45,6 +49,15 @@ namespace DiveRunner
             diveList = new List<Dive>(toEdit.Dives);
             foreach (Dive d in toEdit.Dives) DiveListBox.Items.Add(d);
             DiverNameBox.Text = toEdit.Name;
+            if (diver.Scores.Count == 0)
+            {
+                ChangeScoresButton.IsEnabled = false;
+            }
+            else
+            {
+                hasScores = true;
+                this.scores = toEdit.Scores;
+            }
         }
 
         private void NewDiveButton_Click(object sender, RoutedEventArgs e)
@@ -81,13 +94,39 @@ namespace DiveRunner
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            diver = new Diver(DiverNameBox.Text, Board, diveList.ToArray());
             this.Close();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             diver = new Diver(DiverNameBox.Text, Board, diveList.ToArray());
+            if (hasScores) diver.Scores = this.scores;
+        }
+
+        private void ChangeDiveButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = DiveListBox.SelectedIndex;
+            InputBox ib = new InputBox("New Dive", "What is the new dive code?", diveList[index].Code);
+            ib.ShowDialog();
+            string newCode = ib.result;
+            Dive newDive = GetDive(newCode, Board);
+            diveList[index] = newDive;
+            DiveListBox.Items[index] = newDive;
+        }
+
+        private void ChangeScoresButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = DiveListBox.SelectedIndex;
+            ChangeScoreWindow csw = new ChangeScoreWindow(diver.Name, dives[index], scores[index].ToArray());
+            csw.ShowDialog();
+            double[] newScores = csw.newScores;
+            scores[index] = new List<double>(newScores);
+        }
+
+        private void LookUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            DiveSearch ds = new DiveSearch(dives.FindAll(o => o.Board == this.Board));
+            ds.Show();
         }
     }
 }

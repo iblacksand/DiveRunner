@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DiveRunner"
         mc:Ignorable="d"
         Title="DiverWindow" Height="450" Width="800" Closing="Window_Closing">
-    <Grid>
+    <Grid Margin="0,0,-5,0.5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="784*"/>
             <ColumnDefinition Width="11*"/>
@@ -21,6 +21,9 @@
         <Button HorizontalAlignment="Left" Margin="628,327,0,0" VerticalAlignment="Top" Width="75">
             <Button x:Name="SaveButton" Content="Save" Width="75" Click="SaveButton_Click"/>
         </Button>
+        <Button x:Name="ChangeDiveButton" Content="Change Dive" HorizontalAlignment="Left" VerticalAlignment="Top" Width="82" Margin="628,191,0,0" Height="36" Click="ChangeDiveButton_Click"/>
+        <Button x:Name="LookUpButton" Content="Look Up Dive Code" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="628,32,0,0" Height="32" Click="LookUpButton_Click"/>
+        <Button x:Name="ChangeScoresButton" Content="Change Scores" HorizontalAlignment="Left" Margin="628,267,0,0" VerticalAlignment="Top" Width="82" Height="33" Click="ChangeScoresButton_Click"/>
 
     </Grid>
 </Window>

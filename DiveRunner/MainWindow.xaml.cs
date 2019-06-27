@@ -23,6 +23,7 @@ namespace DiveRunner
     public partial class MainWindow : Window
     {
         private Core c;
+        private int swapIndex;
         public MainWindow(Core c)
         {
             this.c = c;
@@ -97,6 +98,35 @@ namespace DiveRunner
         private void DiveSheetButton_Click(object sender, RoutedEventArgs e)
         {
             c.GenerateReports();
+        }
+
+        private void EndSwapButton_Click(object sender, RoutedEventArgs e)
+        {
+            int secondSwap = EventListView.SelectedIndex;
+            if (secondSwap == -1) return;
+            Event ev = c.events[swapIndex];
+            c.events[swapIndex] = c.events[secondSwap];
+            c.events[secondSwap] = ev;
+            StartSwapButton.Visibility = Visibility.Visible;
+            EndSwapButton.Visibility = Visibility.Hidden;
+            EventListView.Items.Clear();
+            foreach (Event cEvent in c.events)
+            {
+                EventListView.Items.Add(cEvent);
+            }
+        }
+
+        private void StartSwapButton_Click(object sender, RoutedEventArgs e)
+        {
+            swapIndex = EventListView.SelectedIndex;
+            if (swapIndex == -1) return;
+            StartSwapButton.Visibility = Visibility.Hidden;
+            EndSwapButton.Visibility = Visibility.Visible;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            c.AutoSave();
         }
     }
 }
