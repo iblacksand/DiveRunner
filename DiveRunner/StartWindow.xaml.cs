@@ -36,18 +36,18 @@ namespace DiveRunner
             fileD.ShowDialog();
             string f = fileD.FileName;
             Core c = JsonConvert.DeserializeObject<Core>(File.ReadAllText(f));
-            ShowMainWindow(c);
+            ShowMainWindow(c,f);
         }
 
         private void NewMeetButton_Click(object sender, RoutedEventArgs e)
         {
             Core c = new Core();
-            ShowMainWindow(c);
+            ShowMainWindow(c, "NewFile.json");
         }
 
-        private void ShowMainWindow(Core c)
+        private void ShowMainWindow(Core c, string f)
         {
-            MainWindow mw = new MainWindow(c);
+            MainWindow mw = new MainWindow(c , f);
             mw.Show();
             this.Hide();
         }

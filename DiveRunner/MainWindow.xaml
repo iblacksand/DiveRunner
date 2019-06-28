@@ -11,7 +11,7 @@
         <ListBox x:Name="EventListView" HorizontalAlignment="Left" Height="304" Margin="10,76,0,0" VerticalAlignment="Top" Width="579" RenderTransformOrigin="0.493,0.535"/>
         <Button x:Name="NewEventButton" Content="New Event" HorizontalAlignment="Left" Margin="651,107,0,0" VerticalAlignment="Top" Width="92" Height="26" Click="NewEvent"/>
         <TextBlock x:Name="EventBlock" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Events" VerticalAlignment="Top" Width="120" Margin="22,54,0,0"/>
-        <TextBlock x:Name="DiveRunnerBlock" HorizontalAlignment="Left" Margin="314,10,0,0" TextWrapping="Wrap" Text="Dive Runner" VerticalAlignment="Top" FontSize="24"/>
+        <TextBlock x:Name="DiveRunnerBlock" HorizontalAlignment="Left" Margin="300,41,0,0" TextWrapping="Wrap" Text="Dive Runner" VerticalAlignment="Top" FontSize="24"/>
         <Button x:Name="EditEventButton" Content="Edit Event" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="651,138,0,0" Height="27" Click="EditEventButton_Click"/>
         <Button x:Name="RemoveEventButton" Content="Remove Event" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="651,209,0,0" Height="26" Click="RemoveEventButton_Click"/>
         <Button x:Name="SaveAsButton" Content="Save As..." HorizontalAlignment="Left" Margin="651,24,0,0" VerticalAlignment="Top" Width="92" Click="SaveAsButton_Click" Height="26"/>
@@ -23,5 +23,7 @@
         <Button x:Name="DiveSheetButton" Content="Generate Dive Sheets" HorizontalAlignment="Left" Margin="625,380,0,0" VerticalAlignment="Top" Width="142" Height="24" Click="DiveSheetButton_Click"/>
         <Button x:Name="StartSwapButton" Content="Start Swap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Margin="660,167,0,0" Height="25" Click="StartSwapButton_Click"/>
         <Button x:Name="EndSwapButton" Content="End Swap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Margin="660,167,0,0" Height="25" Visibility="Hidden" Click="EndSwapButton_Click"/>
+        <ComboBox x:Name="FileList" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Width="217"/>
+        <Button x:Name="Save_Load_Button" Content="Save and load" HorizontalAlignment="Left" Margin="232,24,0,0" VerticalAlignment="Top" Width="82" Click="Save_Load_Button_Click"/>
     </Grid>
 </Window>

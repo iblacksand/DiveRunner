@@ -24,7 +24,25 @@ namespace DiveRunner
     {
         private Core c;
         private int swapIndex;
-        public MainWindow(Core c)
+        private string NameOfFile;
+        private List<string> listoffiles = new List<string>();
+        public MainWindow(Core c, string f)
+        {
+            this.c = c;
+            listoffiles.Add(f);
+            InitializeComponent();
+            JudgeCounter.Text = "1";
+            foreach (Event cEvent in c.events)
+            {
+                EventListView.Items.Add(cEvent);
+            }
+            this.NameOfFile = f;
+            FileList.Items.Add(f.Split('/')[f.Split('/').Length - 1]);
+            FileList.Items.Add("Add new file...");
+            FileList.Items.Add("Add old file...");
+        }
+
+        public MainWindow(Core c, string f, List<string> AllFiles)
         {
             this.c = c;
             InitializeComponent();
@@ -33,6 +51,11 @@ namespace DiveRunner
             {
                 EventListView.Items.Add(cEvent);
             }
+            listoffiles = AllFiles;
+            this.NameOfFile = f;
+            foreach (string p in AllFiles) FileList.Items.Add(p.Split('/')[p.Split('/').Length - 1]);
+            FileList.Items.Add("Add new file...");
+            FileList.Items.Add("Add old file...");
         }
 
         private void NewEvent(object sender, RoutedEventArgs e)
@@ -127,6 +150,48 @@ namespace DiveRunner
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             c.AutoSave();
+        }
+
+        private void Save_Load_Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Saving Core
+            string s = JsonConvert.SerializeObject(c);
+            File.WriteAllText(NameOfFile, s);
+            if(FileList.SelectedIndex == listoffiles.Count)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "JSON Files | *.json";
+                sfd.ShowDialog();
+                string f = sfd.FileName;
+                Core nc = new Core();
+                listoffiles.Add(f);
+                MainWindow nmw = new MainWindow(nc, f, listoffiles);
+                this.Hide();
+                nmw.ShowDialog();
+                this.Close();
+            }
+            else if (FileList.SelectedIndex > listoffiles.Count)
+            {
+                OpenFileDialog sfd = new OpenFileDialog();
+                sfd.Filter = "JSON Files | *.json";
+                sfd.ShowDialog();
+                string f = sfd.FileName;
+                Core nc = JsonConvert.DeserializeObject<Core>(File.ReadAllText(f));
+                listoffiles.Add(f);
+                MainWindow nmw = new MainWindow(nc, f, listoffiles);
+                this.Hide();
+                nmw.ShowDialog();
+                this.Close();
+            }
+            else if(FileList.SelectedIndex > -1)
+            {
+                string f = (string)FileList.Items[FileList.SelectedIndex];
+                Core nc = JsonConvert.DeserializeObject<Core>(File.ReadAllText(f));
+                MainWindow nmw = new MainWindow(nc, f, listoffiles);
+                this.Hide();
+                nmw.ShowDialog();
+                this.Close();
+            }
         }
     }
 }
