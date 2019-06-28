@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "DiveRunner"
-#define MyAppVersion "0.1"
+#define MyAppVersion "0.1.1"
 #define MyAppPublisher "iblacksand"
 #define MyAppURL "https://iblacksand.github.io/"
 #define MyAppExeName "DiveRunner.exe"
