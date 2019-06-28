@@ -53,7 +53,7 @@ namespace DiveRunner
             }
             listoffiles = AllFiles;
             this.NameOfFile = f;
-            foreach (string p in AllFiles) FileList.Items.Add(p.Split('/')[p.Split('/').Length - 1]);
+            foreach (string p in AllFiles) FileList.Items.Add(p.Split('\\')[p.Split('\\').Length - 1]);
             FileList.Items.Add("Add new file...");
             FileList.Items.Add("Add old file...");
         }
@@ -192,6 +192,12 @@ namespace DiveRunner
                 nmw.ShowDialog();
                 this.Close();
             }
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            string s = JsonConvert.SerializeObject(c);
+            File.WriteAllText(NameOfFile, s);
         }
     }
 }

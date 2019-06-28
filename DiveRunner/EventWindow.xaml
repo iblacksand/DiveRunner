@@ -1,9 +1,10 @@
-﻿<Window x:Class="DiveRunner.EventWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiveRunner"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="DiveRunner.EventWindow"
         mc:Ignorable="d"
         Title="EventWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
@@ -11,14 +12,16 @@
         <Button x:Name="NewDiverButton" Content="New Diver" Margin="608,92,86,298.5" Click="NewDiverButton_Click" IsEnabled="False"/>
         <Button x:Name="EditDiverButton" Content="Edit Diver" HorizontalAlignment="Left" Margin="608,156,0,0" VerticalAlignment="Top" Width="101" Height="30" IsEnabled="False" Click="EditDiverButton_Click"/>
         <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="674,376,0,0" VerticalAlignment="Top" Width="111" Height="36" Click="SaveButton_Click"/>
-        <TextBlock x:Name="titleBlock" HorizontalAlignment="Left" Margin="30,38,0,0" TextWrapping="Wrap" Text="Title Of Event
-" VerticalAlignment="Top"/>
+        <TextBlock x:Name="titleBlock" HorizontalAlignment="Left" Margin="30,38,0,0" TextWrapping="Wrap" Text="Title Of Event " VerticalAlignment="Top"/>
         <TextBox x:Name="EventNameBox" HorizontalAlignment="Left" Height="23" Margin="126,37,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="239" RenderTransformOrigin="-0.405,-0.403"/>
         <ComboBox x:Name="BoardSelection" HorizontalAlignment="Left" Margin="593,38,0,0" VerticalAlignment="Top" Width="44"/>
         <TextBlock x:Name="boardBlock" HorizontalAlignment="Left" Margin="497,41,0,0" TextWrapping="Wrap" Text="Board Height" VerticalAlignment="Top"/>
         <TextBlock x:Name="diverNameBlock" HorizontalAlignment="Left" Margin="22,62,0,0" TextWrapping="Wrap" Text="Divers in Event" VerticalAlignment="Top"/>
         <Button x:Name="SetButton" Content="Set" HorizontalAlignment="Left" Margin="647,38,0,0" VerticalAlignment="Top" Width="47" Click="SetButton_Click"/>
-        <Button x:Name="RemoveDiverButton" Content="Remove Diver" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Margin="608,219,0,0" Height="32" Click="RemoveDiverButton_Click"/>
+        <Button x:Name="RemoveDiverButton" Content="Remove Diver" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Margin="608,210,0,0" Height="32" Click="RemoveDiverButton_Click"/>
+
+        <xctk:IntegerUpDown x:Name="DupNumberBox" HorizontalAlignment="Left" Margin="712,267,0,0" VerticalAlignment="Top" Value="1" DefaultValue="1" DisplayDefaultValueOnEmptyText="True" Minimum="1"/>
+        <Button x:Name="DuplicateDiverButton" Content="Duplicate Diver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Margin="608,259,0,0" Height="32" Click="DuplicateDiverButton_Click" IsEnabled="False"/>
 
     </Grid>
 </Window>

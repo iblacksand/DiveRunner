@@ -42,23 +42,23 @@ namespace DiveRunner
         private void NewMeetButton_Click(object sender, RoutedEventArgs e)
         {
             Core c = new Core();
-            ShowMainWindow(c, "NewFile.json");
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "JSON Files | *.json";
+            sfd.ShowDialog();
+            string f = sfd.FileName;
+            ShowMainWindow(c, f);
         }
 
         private void ShowMainWindow(Core c, string f)
         {
             MainWindow mw = new MainWindow(c , f);
-            mw.Show();
             this.Hide();
+            mw.ShowDialog();
+            this.Close();
         }
 
         private void Testbutton_Click(object sender, RoutedEventArgs e)
         {
-            DiverWindow dw = new DiverWindow("1M");
-            dw.ShowDialog();
-            Diver d = dw.diver;
-            string s = JsonConvert.SerializeObject(d);
-            File.WriteAllText("test.json", s);
         }
     }
 }

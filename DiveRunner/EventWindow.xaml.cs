@@ -72,6 +72,7 @@ namespace DiveRunner
             NewDiverButton.IsEnabled = true;
             EditDiverButton.IsEnabled = true;
             RemoveDiverButton.IsEnabled = true;
+            DuplicateDiverButton.IsEnabled = true;
         }
 
         private void RemoveDiverButton_Click(object sender, RoutedEventArgs e)
@@ -100,6 +101,26 @@ namespace DiveRunner
             foreach (Diver d in divers)
             {
                 createdEvent.AddDiver(d);
+            }
+        }
+
+        private void DuplicateDiverButton_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < DupNumberBox.Value; i++)
+            {
+                Diver DiverToCopy;
+                if (DiverList.SelectedIndex != -1)
+                {
+                    DiverToCopy = divers[DiverList.SelectedIndex];
+                }
+                else
+                {
+                    if (divers.Count == 0) return;
+                    DiverToCopy = divers[0];
+                }
+                Diver dupDiver = new Diver(DiverToCopy.Name + " Copy " + (i+1), DiverToCopy.Board, DiverToCopy.Dives);
+                divers.Add(dupDiver);
+                DiverList.Items.Add(dupDiver);
             }
         }
     }

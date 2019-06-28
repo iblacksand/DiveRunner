@@ -24,6 +24,7 @@
         <Button x:Name="StartSwapButton" Content="Start Swap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Margin="660,167,0,0" Height="25" Click="StartSwapButton_Click"/>
         <Button x:Name="EndSwapButton" Content="End Swap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Margin="660,167,0,0" Height="25" Visibility="Hidden" Click="EndSwapButton_Click"/>
         <ComboBox x:Name="FileList" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Width="217"/>
-        <Button x:Name="Save_Load_Button" Content="Save and load" HorizontalAlignment="Left" Margin="232,24,0,0" VerticalAlignment="Top" Width="82" Click="Save_Load_Button_Click"/>
+        <Button x:Name="Save_Load_Button" Content="Save and load" HorizontalAlignment="Left" Margin="232,22,0,0" VerticalAlignment="Top" Width="82" Click="Save_Load_Button_Click"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" Margin="319,24,0,0" VerticalAlignment="Top" Width="80" Click="SaveButton_Click" Height="17"/>
     </Grid>
 </Window>

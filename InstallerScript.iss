@@ -39,25 +39,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 6.1; Check: not IsAdminInstallMode
 
 [Files]
-Source: ".\DiveRunner\bin\Debug\DiveRunner.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\AnnouncementTemplate.tex"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\CombinedTemplateLandscape.tex"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\CombinedTemplatePortrait.tex"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\divelist.csv"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\DivelistTemplate.tex"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\DiveScoreTemplate.tex"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\Fastenshtein.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\Fastenshtein.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\Newtonsoft.Json.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\ResultsTemplate.tex"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\SampleCore.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\SampleCoreWithScores.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\Xceed.Wpf.AvalonDock.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\DiveRunner\bin\Debug\Xceed.Wpf.Toolkit.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\DiveRunner\bin\Release\AnnouncementTemplate.tex"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
