@@ -12,7 +12,8 @@ A basic tool that can run a dive meet
 ## Requirements
 
 - [MiKTex](https://miktex.org/)
-- Windows
+- Windows XP with Service Pack 2 or higher
+- .NET Framework 3.0 or higher
 
 
 ## Installation
