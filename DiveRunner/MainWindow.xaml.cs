@@ -95,8 +95,6 @@ namespace DiveRunner
             string f = sfd.FileName;
             string s = JsonConvert.SerializeObject(c);
             File.WriteAllText(f,s);
-            //            c.AutoSave();
-            //            c.GenerateDiveList();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -163,7 +161,7 @@ namespace DiveRunner
                 sfd.Filter = "JSON Files | *.json";
                 sfd.ShowDialog();
                 string f = sfd.FileName;
-                Core nc = new Core();
+                Core nc = new Core(f);
                 listoffiles.Add(f);
                 MainWindow nmw = new MainWindow(nc, f, listoffiles);
                 this.Hide();

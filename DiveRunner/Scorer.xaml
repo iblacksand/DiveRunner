@@ -22,6 +22,5 @@
         <TextBox x:Name="JudgeThreeScoreBox" HorizontalAlignment="Left" Height="23" Margin="431,209,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="61" TextAlignment="Center"/>
         <Button x:Name="NextDiverButton" Content="Next Diver" HorizontalAlignment="Left" VerticalAlignment="Top" Width="114" Margin="254,337,0,0" Height="44" Click="NextDiverButton_Click"/>
         <TextBlock x:Name="DiveBlock" HorizontalAlignment="Left" Margin="73,137,0,0" TextWrapping="Wrap" Text="DiveBlock" VerticalAlignment="Top" Height="37" Width="474" FontSize="20"/>
-
     </Grid>
 </Window>

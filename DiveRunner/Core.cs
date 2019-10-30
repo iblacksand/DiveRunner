@@ -29,9 +29,13 @@ public class Core
     public int curDiver;
     public int totalDives;
     public int completedDives;
-    public Core()
+    public string FileName;
+    public string PDFFolderName;
+    public Core(String filename)
     {
-        if (!Directory.Exists("pdfs")) Directory.CreateDirectory("pdfs");
+        this.FileName = filename;
+        this.PDFFolderName = "pdfs/" + FileName.Split(new[] {".json"}, StringSplitOptions.RemoveEmptyEntries)[0] + "/";
+        if (!Directory.Exists("pdfs/")) Directory.CreateDirectory("pdfs");
         else
         {
             Directory.Delete("pdfs", true);
@@ -127,8 +131,7 @@ public class Core
         for(int i = 0; i < events.Count; i++){
             pdfs.AddRange(events[i].GenerateReports());
         }
-
-        Thread.Sleep(5000);
+        MessageBox.Show("Press ok when all command windows close");
         string filename = "pdfs/" + "/CombinedReport";
         string template = File.ReadAllText("CombinedTemplateLandscape.tex");
         string includes = "";
@@ -139,7 +142,7 @@ public class Core
         template = template.Replace("//Pdf includes//", includes);
         File.WriteAllText(filename + ".tex", template);
         System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + "pdfs" + " " + filename + ".tex");
-        Thread.Sleep(5000);
+        MessageBox.Show("Press ok when all command windows close");
         Process.Start(Environment.CurrentDirectory + "/" + filename + ".pdf");
     }
 

@@ -41,11 +41,11 @@ namespace DiveRunner
 
         private void NewMeetButton_Click(object sender, RoutedEventArgs e)
         {
-            Core c = new Core();
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "JSON Files | *.json";
             sfd.ShowDialog();
             string f = sfd.FileName;
+            Core c = new Core(f);
             ShowMainWindow(c, f);
         }
 
