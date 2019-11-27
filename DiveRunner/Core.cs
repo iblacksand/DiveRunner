@@ -31,16 +31,12 @@ public class Core
     public int completedDives;
     public string FileName;
     public string PDFFolderName;
+    public bool createdDirectory;
     public Core(String filename)
     {
+        this.createdDirectory = false;
         this.FileName = filename;
-        this.PDFFolderName = "pdfs/" + FileName.Split(new[] {".json"}, StringSplitOptions.RemoveEmptyEntries)[0] + "/";
-        if (!Directory.Exists("pdfs/")) Directory.CreateDirectory("pdfs");
-        else
-        {
-            Directory.Delete("pdfs", true);
-            Directory.CreateDirectory("pdfs");
-        }
+        this.PDFFolderName = "/pdfs/" + FileName.Replace(".json", "") + "/";
         totalDives = 0;
         completedDives = 0;
         canStart = false;
@@ -126,34 +122,52 @@ public class Core
 
     public void GenerateReports()
     {
-        if (!Directory.Exists("pdfs")) Directory.CreateDirectory("pdfs");
+        if (!this.createdDirectory && !Directory.Exists(this.PDFFolderName)){
+            Directory.CreateDirectory(this.PDFFolderName);
+            createdDirectory = true;
+        }
+        else if(!this.createdDirectory)
+        {
+            createdDirectory = true;
+            Directory.Delete(this.PDFFolderName, true);
+            Directory.CreateDirectory(this.PDFFolderName);
+        }
         List<string> pdfs = new List<string>();
         for(int i = 0; i < events.Count; i++){
             pdfs.AddRange(events[i].GenerateReports());
         }
-        MessageBox.Show("Press ok when all command windows close");
-        string filename = "pdfs/" + "/CombinedReport";
+        MessageBox.Show("Press ok when all command windows close","Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
+        string filename = PDFFolderName + "CombinedReport";
         string template = File.ReadAllText("CombinedTemplateLandscape.tex");
         string includes = "";
         foreach (string d in pdfs)
         {
-            includes += @"\includepdf[pages=-]{" + d + "}\n";
+            includes += @"\includepdf[pages=-]{" + PDFFolderName + d + "}\n";
         }
         template = template.Replace("//Pdf includes//", includes);
         File.WriteAllText(filename + ".tex", template);
-        System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + "pdfs" + " " + filename + ".tex");
-        MessageBox.Show("Press ok when all command windows close");
+        System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + PDFFolderName + " " + filename + ".tex");
+        MessageBox.Show("Press ok when all command windows close","Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
         Process.Start(Environment.CurrentDirectory + "/" + filename + ".pdf");
     }
 
     public void GenerateDiveList(){
-        if (!Directory.Exists("pdfs")) Directory.CreateDirectory("pdfs");
+        if (!this.createdDirectory && !Directory.Exists(this.PDFFolderName)){
+            Directory.CreateDirectory(this.PDFFolderName);
+            createdDirectory = true;
+        }
+        else if(!this.createdDirectory)
+        {
+            createdDirectory = true;
+            Directory.Delete(this.PDFFolderName, true);
+            Directory.CreateDirectory(this.PDFFolderName);
+        }
         List<string> pdfs = new List<string>();
         for(int i = 0; i < events.Count; i++){
             pdfs.Add(events[i].GenerateDiveList());
         }
-        Thread.Sleep(5000);
-        string filename = "pdfs/" + "CombinedDiveList";
+        MessageBox.Show("Press ok when all command windows close","Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
+        string filename = PDFFolderName + "CombinedDiveList";
         string template = File.ReadAllText("CombinedTemplatePortrait.tex");
         string includes = "";
         foreach (string d in pdfs)
@@ -162,8 +176,8 @@ public class Core
         }
         template = template.Replace("//Pdf includes//", includes);
         File.WriteAllText(filename + ".tex", template);
-        System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + "pdfs" + " " + filename + ".tex");
-        Thread.Sleep(5000);
+        System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + PDFFolderName + " " + filename + ".tex");
+        MessageBox.Show("Press ok when all command windows close","Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
         Process.Start(Environment.CurrentDirectory + "/" + filename + ".pdf");
     }
 
@@ -201,9 +215,10 @@ public class Event
     public string Board;
     public int completedDives;
     public int at;
-    public string dirname = "pdfs";
-	public Event(String Name, String Board)
+    public String dirname;
+	public Event(String Name, String Board, String dirname)
 	{
+        this.dirname = dirname;
 	    this.completedDives = 0;
         this.Board = Board;
 	    divers = new List<Diver>();
@@ -259,6 +274,7 @@ public class Event
     {
         for(int i = 0; i < divers.Count; i++)
         {
+            divers[i].dirname = this.dirname;
             divers[i].CalculateScore();
         }
         string filename = dirname + "/" + name.Replace(" ", "");
@@ -287,7 +303,7 @@ System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + d
             pdfs.Add(name.Replace(" ", "") + ".pdf");
             foreach (Diver d in divers)
             {
-                pdfs.Add(d.Pdf.Split('/')[1]);
+                pdfs.Add(d.Pdf.Split('/')[d.Pdf.Split('/').Length - 1]);
             }
             return pdfs;
     }
@@ -459,7 +475,7 @@ public class Diver
         for (int i = 0; i < Dives.Length; i++)
         {
             table += Dives[i].Code + "&" + Dives[i].Description + "&" + Scores[i][0] + "&" + Scores[i][1] + "&" + Scores[i][2] + "&" + SubScores[i][0] + "&" + SubScores[i][1] + @"\\\midrule" + "\n";
-        }
+        }   
         template = template.Replace("//tabledata//", table);
         File.WriteAllText(filename + ".tex", template);
         Pdf = filename + ".pdf";

@@ -50,12 +50,11 @@ namespace DiveRunner
             CoreState cs = c.State();
             if (cs.remainingDives == 0)
             {
-                MessageBox.Show("Meet is Finished!", "Meet Finished", MessageBoxButton.OK);
+                MessageBox.Show("Meet is Finished!", "Meet Finished", MessageBoxButton.OK, MessageBoxImage.Information);
                 c.AutoSave();
                 this.Close();
                 return;
             }
-
             TotalDiveBlock.Text = "Total Dives: " + cs.totalDives;
             RemainingDiveBlock.Text = "Remaining Dives: " + cs.remainingDives;
             CompletedDiveBlock.Text = "Completed Dives: " + cs.completedDives;
@@ -68,9 +67,10 @@ namespace DiveRunner
         private void NextDiverButton_Click(object sender, RoutedEventArgs e)
         {
             NextDiverButton.IsEnabled = false;
+            Double x;
             if (judgeCount == 1)
             {
-                if (Double.TryParse(JudgeOneScoreBox.Text))
+                if (Double.TryParse(JudgeOneScoreBox.Text, out x))
                 {
                     double judgeScore = Double.Parse(JudgeOneScoreBox.Text);
                     double[] scores = new[] { judgeScore, judgeScore, judgeScore };
@@ -80,7 +80,8 @@ namespace DiveRunner
             }
             else if (judgeCount == 2)
             {
-                if (Double.TryParse(JudgeOneScoreBox.Text) && Double.TryParse(JudgeTwoScoreBox.Text))
+                
+                if (Double.TryParse(JudgeOneScoreBox.Text, out x) && Double.TryParse(JudgeTwoScoreBox.Text, out x))
                 {
                     double judge1 = Double.Parse(JudgeOneScoreBox.Text);
                     double judge2 = Double.Parse(JudgeTwoScoreBox.Text);
@@ -91,7 +92,7 @@ namespace DiveRunner
             }
             else
             {
-                if (Double.TryParse(JudgeOneScoreBox.Text) && Double.TryParse(JudgeTwoScoreBox.Text) && Double.TryParse(JudgeThreeScoreBox.Text))
+                if (Double.TryParse(JudgeOneScoreBox.Text, out x) && Double.TryParse(JudgeTwoScoreBox.Text, out x) && Double.TryParse(JudgeThreeScoreBox.Text, out x))
                 {
                     double judge1 = Double.Parse(JudgeOneScoreBox.Text);
                     double judge2 = Double.Parse(JudgeTwoScoreBox.Text);

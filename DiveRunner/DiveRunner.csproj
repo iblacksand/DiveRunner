@@ -37,6 +37,9 @@
   <PropertyGroup>
     <StartupObject>DiveRunner.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fastenshtein, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fastenshtein.1.0.0.5\lib\net40-client\Fastenshtein.dll</HintPath>
@@ -164,6 +167,7 @@
     <None Include="AnnouncementTemplate.tex">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="app.manifest" />
     <None Include="CombinedTemplateLandscape.tex">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

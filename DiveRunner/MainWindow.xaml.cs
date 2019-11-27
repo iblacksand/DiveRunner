@@ -60,7 +60,7 @@ namespace DiveRunner
 
         private void NewEvent(object sender, RoutedEventArgs e)
         {
-            EventWindow eventWindow = new EventWindow();
+            EventWindow eventWindow = new EventWindow(c.PDFFolderName);
             eventWindow.ShowDialog();
             Event ev = eventWindow.createdEvent;
             c.AddEvent(ev);

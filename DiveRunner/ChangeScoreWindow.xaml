@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiveRunner"
         mc:Ignorable="d"
-        Title="ChangeScoreWindow" Height="450" Width="800" Closing="Window_Closing">
+        Title="ChangeScoreWindow" Height="450" Width="800" Closing="Window_Closing" WindowStyle="None">
     <Grid>
         <TextBox x:Name="JudgeOneScoreBox" HorizontalAlignment="Left" Height="23" Margin="116,288,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="69"/>
         <TextBlock HorizontalAlignment="Left" Margin="116,244,0,0" TextWrapping="Wrap" Text="Judge 1 Score" VerticalAlignment="Top" Height="39" Width="69"/>

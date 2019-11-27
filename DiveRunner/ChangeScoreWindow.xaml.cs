@@ -32,7 +32,13 @@ namespace DiveRunner
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Double x;
+            if (Double.TryParse(JudgeOneScoreBox.Text.Trim(), out x) && Double.TryParse(JudgeTwoScoreBox.Text.Trim(), out x) && Double.TryParse(JudgeThreeScoreBox.Text.Trim(), out x)){
+                this.Close();
+            }
+            else{
+                MessageBox.Show("The scores are not all numbers", "Error", MessageBoxButton.OK,MessageBoxImage.Error);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -21,8 +21,10 @@ namespace DiveRunner
     {
         public Event createdEvent;
         public List<Diver> divers;
-        public EventWindow()
+        private string dirname;
+        public EventWindow(string dirname)
         {
+            this.dirname = dirname;
             divers = new List<Diver>();
             InitializeComponent();
             BoardSelection.Items.Add("1M");
@@ -55,7 +57,7 @@ namespace DiveRunner
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            createdEvent = new Event(EventNameBox.Text, BoardSelection.Text);
+            createdEvent = new Event(EventNameBox.Text, BoardSelection.Text, dirname);
             foreach (Diver d in divers)
             {
                 createdEvent.AddDiver(d);
@@ -65,7 +67,7 @@ namespace DiveRunner
 
         private void SetButton_Click(object sender, RoutedEventArgs e)
         {
-            createdEvent = new Event(EventNameBox.Text, BoardSelection.SelectionBoxItem.ToString());
+            createdEvent = new Event(EventNameBox.Text, BoardSelection.SelectionBoxItem.ToString(), dirname);
             EventNameBox.IsEnabled = false;
             BoardSelection.IsEnabled = false;
             SetButton.IsEnabled = false;
@@ -97,7 +99,7 @@ namespace DiveRunner
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            createdEvent = new Event(EventNameBox.Text, BoardSelection.Text);
+            createdEvent = new Event(EventNameBox.Text, BoardSelection.Text, dirname);
             foreach (Diver d in divers)
             {
                 createdEvent.AddDiver(d);
