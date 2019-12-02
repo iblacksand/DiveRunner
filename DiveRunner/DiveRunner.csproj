@@ -191,10 +191,10 @@
     <None Include="ResultsTemplate.tex">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SampleCore.json">
+    <None Include="SampleCore-Scores.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SampleCoreWithScores.json">
+    <None Include="SampleCore.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

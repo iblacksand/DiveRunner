@@ -92,9 +92,14 @@ namespace DiveRunner
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "JSON Files | *.json";
             sfd.ShowDialog();
+            String oc = JsonConvert.SerializeObject(c);
             string f = sfd.FileName;
+            c.createdDirectory = false;
+            c.FileName = f.Split('\\').Last();
+            c.PDFFolderName = Environment.CurrentDirectory + "/pdfs/" + f.Split('\\').Last().Replace(".json", "") + "/";
             string s = JsonConvert.SerializeObject(c);
             File.WriteAllText(f,s);
+            c = JsonConvert.DeserializeObject<Core>(oc);
         }
 
         private void Window_Closed(object sender, EventArgs e)

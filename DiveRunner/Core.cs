@@ -35,8 +35,8 @@ public class Core
     public Core(String filename)
     {
         this.createdDirectory = false;
-        this.FileName = filename;
-        this.PDFFolderName = "/pdfs/" + FileName.Replace(".json", "") + "/";
+        this.FileName = filename.Split('\\').Last();
+        this.PDFFolderName = Environment.CurrentDirectory + "/pdfs/" + FileName.Replace(".json", "") + "/";
         totalDives = 0;
         completedDives = 0;
         canStart = false;
@@ -122,18 +122,13 @@ public class Core
 
     public void GenerateReports()
     {
-        if (!this.createdDirectory && !Directory.Exists(this.PDFFolderName)){
+        if (!Directory.Exists(this.PDFFolderName)){
             Directory.CreateDirectory(this.PDFFolderName);
             createdDirectory = true;
-        }
-        else if(!this.createdDirectory)
-        {
-            createdDirectory = true;
-            Directory.Delete(this.PDFFolderName, true);
-            Directory.CreateDirectory(this.PDFFolderName);
         }
         List<string> pdfs = new List<string>();
         for(int i = 0; i < events.Count; i++){
+            events[i].dirname = PDFFolderName;
             pdfs.AddRange(events[i].GenerateReports());
         }
         MessageBox.Show("Press ok when all command windows close","Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -142,28 +137,23 @@ public class Core
         string includes = "";
         foreach (string d in pdfs)
         {
-            includes += @"\includepdf[pages=-]{" + PDFFolderName + d + "}\n";
+            includes += @"\includepdf[pages=-]{" + PDFFolderName.Replace("\\","/") + d + "}\n";
         }
         template = template.Replace("//Pdf includes//", includes);
         File.WriteAllText(filename + ".tex", template);
         System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + PDFFolderName + " " + filename + ".tex");
         MessageBox.Show("Press ok when all command windows close","Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
-        Process.Start(Environment.CurrentDirectory + "/" + filename + ".pdf");
+        Process.Start(filename + ".pdf");
     }
 
     public void GenerateDiveList(){
-        if (!this.createdDirectory && !Directory.Exists(this.PDFFolderName)){
+        if (!Directory.Exists(this.PDFFolderName)){
             Directory.CreateDirectory(this.PDFFolderName);
             createdDirectory = true;
-        }
-        else if(!this.createdDirectory)
-        {
-            createdDirectory = true;
-            Directory.Delete(this.PDFFolderName, true);
-            Directory.CreateDirectory(this.PDFFolderName);
         }
         List<string> pdfs = new List<string>();
         for(int i = 0; i < events.Count; i++){
+            events[i].dirname = PDFFolderName;
             pdfs.Add(events[i].GenerateDiveList());
         }
         MessageBox.Show("Press ok when all command windows close","Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -172,13 +162,13 @@ public class Core
         string includes = "";
         foreach (string d in pdfs)
         {
-            includes += @"\includepdf[pages=-]{" + d + "}\n";
+            includes += @"\includepdf[pages=-]{" + d.Replace("\\", "/") + "}\n";
         }
         template = template.Replace("//Pdf includes//", includes);
         File.WriteAllText(filename + ".tex", template);
         System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + PDFFolderName + " " + filename + ".tex");
         MessageBox.Show("Press ok when all command windows close","Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
-        Process.Start(Environment.CurrentDirectory + "/" + filename + ".pdf");
+        Process.Start(filename + ".pdf");
     }
 
     public void AutoSave()
