@@ -329,7 +329,7 @@ System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + d
                 string filename = dirname + "/AnnouncersList-"+name.Replace(" ", "");
                 File.WriteAllText(filename + ".tex", template);
                 System.Diagnostics.Process.Start("CMD.exe", "/C pdflatex -output-directory=" + dirname + " " + filename + ".tex");
-                return filename.Split('/')[1] +".pdf";
+                return filename.Split('/')[filename.Split('/').Length-1] +".pdf";
     }
 
     public bool IsDone()
