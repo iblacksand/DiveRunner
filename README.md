@@ -4,7 +4,7 @@ A basic tool that can run a dive meet
 
 ## How for use/Tutorial
 
-Please see [DiveRunner-Instructions.md](https://github.com/iblacksand/DiveRunner/blob/master/DiveRunner-Instructions.md). The pdf of this file can be downloaded [here](https://github.com/iblacksand/DiveRunner/raw/master/DiveRunner-Instructions.pdf)
+Please see [DiveRunner-Instructions.md](https://github.com/iblacksand/DiveRunner/blob/master/DiveRunner-Instructions.md). The pdf of this file can be downloaded [here](https://github.com/iblacksand/DiveRunner/raw/master/DiveRunner-Instructions.pdf).
 
 ## Features
 
